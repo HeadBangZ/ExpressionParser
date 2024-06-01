@@ -1,0 +1,88 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ExpressionParser.Common.Enums;
+using ExpressionParser.Interfaces;
+
+namespace ExpressionParser.Common
+{
+    public class Parser : IParser
+    {
+        public Parser()
+        {
+
+        }
+
+        public INode Parse(List<Token> tokens)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Token> Tokenize(string expression)
+        {
+            List<Token> tokens = new List<Token>();
+
+            int i = 0;
+
+            while (i < expression.Length)
+            {
+                char c = expression[i];
+
+                switch (c)
+                {
+                    case ' ':
+                    case '\t':
+                    case '\r':
+                    case '\n':
+                        i++;
+                        break;
+                    case '+':
+                    case '-':
+                    case '*':
+                    case '/':
+                    case '^':
+                        tokens.Add(new Token(TokenType.Operator, c.ToString()));
+                        i++;
+                        break;
+                    case '(':
+                        tokens.Add(new Token(TokenType.LeftParenthesis, c.ToString()));
+                        i++;
+                        break;
+                    case ')':
+                        tokens.Add(new Token(TokenType.RightParenthesis, c.ToString()));
+                        i++;
+                        break;
+                    default:
+                        if (char.IsDigit(c))
+                        {
+                            StringBuilder sb = new StringBuilder();
+                            while (i < expression.Length && char.IsDigit(expression[i]))
+                            {
+                                sb.Append(expression[i]);
+                                i++;
+                            }
+
+                            double number;
+
+                            if (!double.TryParse(sb.ToString(), out number))
+                            {
+                                throw new FormatException($"Invalid number format: {sb}");
+                            }
+
+                            tokens.Add(new Token(TokenType.ValueData, number.ToString()));
+                        }
+                        else
+                        {
+                            i++;
+                        }
+                        break;
+
+                }
+            }
+
+            return tokens;
+        }
+    }
+}
