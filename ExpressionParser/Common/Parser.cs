@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -81,6 +81,8 @@ namespace ExpressionParser.Common
 
                 }
             }
+
+            tokens.Add(new Token(TokenType.EOF, null));
 
             return tokens;
         }

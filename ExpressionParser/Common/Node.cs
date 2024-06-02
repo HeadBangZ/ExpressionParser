@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,33 +10,14 @@ namespace ExpressionParser.Common
 {
     public class Node : INode
     {
-        public INode Parent { get; set; }
-        public INode Left { get; set; }
-        public INode Right { get; set; }
-        public TokenType DataType { get; set; }
+        public INode? Parent { get; set; }
+        public INode? Left { get; set; }
+        public INode? Right { get; set; }
+        public Token Data { get; set; }
 
-        private object _value;
-
-        public object Value
+        public Node(Token type)
         {
-            get => _value;
-            set
-            {
-                if (value is char || value is double)
-                {
-                    _value = value;
-                }
-                else
-                {
-                    throw new ArgumentException("Value must either be a char or a double");
-                }
-            }
-        }
-
-        public Node(TokenType type, object value)
-        {
-            DataType = type;
-            _value = value;
+            Data = type;
         }
 
         public double Evaluate()

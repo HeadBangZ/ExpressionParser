@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +12,19 @@ namespace ExpressionParser.Common
         public double Evaluate()
         {
             return 0;
+        }
+
+        private double EvaluateOperator(double left, double right, string op)
+        {
+            return op switch
+            {
+                "+" => left + right,
+                "-" => left - right,
+                "*" => left * right,
+                "/" => left / right,
+                "^" => Math.Pow(left, right),
+                _ => throw new InvalidOperationException("Unsupported operator.")
+            };
         }
     }
 }
