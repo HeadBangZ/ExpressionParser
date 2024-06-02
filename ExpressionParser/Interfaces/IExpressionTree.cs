@@ -7,11 +7,10 @@ using ExpressionParser.Common;
 
 namespace ExpressionParser.Interfaces
 {
-    public interface INode : IEvaluable
+    public interface IExpressionTree
     {
-        INode? Parent { get; set; }
-        INode? Left { get; set; }
-        INode? Right { get; set; }
-        Token Data { get; set; }
+        Node Build(List<Token> tokens);
+        Node Inorder(Node root);
+
     }
 }
