@@ -20,7 +20,7 @@ namespace ExpressionParser.Common
             throw new NotImplementedException();
         }
 
-        public List<Token> Tokenize(string expression)
+        public Queue<Token> Tokenize(string expression)
         {
             List<Token> tokens = new List<Token>();
 
@@ -43,15 +43,15 @@ namespace ExpressionParser.Common
                     case '*':
                     case '/':
                     case '^':
-                        tokens.Add(new Token(TokenType.Operator, c.ToString()));
+                        tokens.Add(new Token(TokenType.Operator, c));
                         i++;
                         break;
                     case '(':
-                        tokens.Add(new Token(TokenType.LeftParenthesis, c.ToString()));
+                        tokens.Add(new Token(TokenType.LeftParenthesis, c));
                         i++;
                         break;
                     case ')':
-                        tokens.Add(new Token(TokenType.RightParenthesis, c.ToString()));
+                        tokens.Add(new Token(TokenType.RightParenthesis, c));
                         i++;
                         break;
                     default:
@@ -71,7 +71,7 @@ namespace ExpressionParser.Common
                                 throw new FormatException($"Invalid number format: {sb}");
                             }
 
-                            tokens.Add(new Token(TokenType.ValueData, number.ToString()));
+                            tokens.Add(new Token(TokenType.ValueData, number));
                         }
                         else
                         {
@@ -84,7 +84,7 @@ namespace ExpressionParser.Common
 
             tokens.Add(new Token(TokenType.EOF, null));
 
-            return tokens;
+            return new Queue<Token>(tokens);
         }
     }
 }

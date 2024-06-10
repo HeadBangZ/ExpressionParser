@@ -10,14 +10,15 @@ namespace ExpressionParser.Common
 {
     public class Node : INode
     {
-        public INode? Parent { get; set; }
         public INode? Left { get; set; }
         public INode? Right { get; set; }
         public Token Data { get; set; }
 
-        public Node(Token type)
+        public Node(Token type, INode left = null, INode right = null)
         {
             Data = type;
+            Left = left;
+            Right = right;
         }
 
         public double Evaluate()

@@ -9,7 +9,6 @@ namespace ExpressionParser.Interfaces
 {
     public interface INode : IEvaluable
     {
-        INode? Parent { get; set; }
         INode? Left { get; set; }
         INode? Right { get; set; }
         Token Data { get; set; }

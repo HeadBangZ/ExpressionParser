@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,8 +9,8 @@ namespace ExpressionParser.Interfaces
 {
     internal interface IParser
     {
-        List<Token> Tokenize(string expression);
+        Queue<Token> Tokenize(string expression);
 
-        INode Parse(List<Token> tokens);
+        INode Parse(Queue<Token> tokens);
     }
 }
