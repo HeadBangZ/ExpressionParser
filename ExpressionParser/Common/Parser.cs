@@ -10,7 +10,6 @@ namespace ExpressionParser.Common
 {
     public class Parser : IParser
     {
-        private Queue<Token> _tokens;
         private Token _currentToken;
         private Evaluator _evaluator;
 
@@ -21,14 +20,9 @@ namespace ExpressionParser.Common
 
         public INode Parse(Queue<Token> tokens)
         {
-            _tokens = tokens;
-
-            return null;
-        }
-
-        private INode ParseExpression()
-        {
-            return null;
+            _currentToken = tokens.Count > 0 ? tokens.Dequeue() : new Token(TokenType.EOF, null);
+            var root = ParseExpression(tokens);
+            return root;
         }
 
         public Queue<Token> Tokenize(string expression)
@@ -93,9 +87,31 @@ namespace ExpressionParser.Common
                 }
             }
 
-            tokens.Add(new Token(TokenType.EOF, null));
-
             return new Queue<Token>(tokens);
+        }
+
+        private INode ParseExpression(Queue<Token> tokens)
+        {
+            var left = ParseTerm(tokens);
+
+            return null;
+        }
+
+        private INode ParseTerm(Queue<Token> tokens)
+        {
+            var left = ParseFactor(tokens);
+
+            return null;
+        }
+
+        private INode ParseFactor(Queue<Token> tokens)
+        {
+            return null;
+        }
+
+        private void Match()
+        {
+
         }
     }
 }
