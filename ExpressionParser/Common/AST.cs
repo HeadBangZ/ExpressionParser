@@ -7,7 +7,7 @@ using ExpressionParser.Interfaces;
 
 namespace ExpressionParser.Common
 {
-    internal class AST : IExpressionTree
+    internal class AST
     {
         public Node Build(List<Token> tokens)
         {

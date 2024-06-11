@@ -10,14 +10,25 @@ namespace ExpressionParser.Common
 {
     public class Parser : IParser
     {
+        private Queue<Token> _tokens;
+        private Token _currentToken;
+        private Evaluator _evaluator;
+
         public Parser()
         {
-
+            _evaluator = Evaluator.Instance;
         }
 
-        public INode Parse(List<Token> tokens)
+        public INode Parse(Queue<Token> tokens)
         {
-            throw new NotImplementedException();
+            _tokens = tokens;
+
+            return null;
+        }
+
+        private INode ParseExpression()
+        {
+            return null;
         }
 
         public Queue<Token> Tokenize(string expression)

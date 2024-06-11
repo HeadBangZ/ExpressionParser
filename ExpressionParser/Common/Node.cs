@@ -20,10 +20,5 @@ namespace ExpressionParser.Common
             Left = left;
             Right = right;
         }
-
-        public double Evaluate()
-        {
-            return 0;
-        }
     }
 }

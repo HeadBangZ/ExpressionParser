@@ -1,5 +1,6 @@
 using ExpressionParser;
 using ExpressionParser.Common;
+using ExpressionParser.Interfaces;
 
 internal class Program
 {
@@ -12,6 +13,8 @@ internal class Program
         Console.WriteLine();
         Console.WriteLine("\tAllowed operators: + - * / ^ ( )");
         Console.WriteLine("____________________________________________________________");
+
+        Parser parser = new Parser();
 
         while (true)
         {
@@ -27,13 +30,16 @@ internal class Program
 
             if (input != null)
             {
-                Parser parser = new Parser();
                 var tokens = parser.Tokenize(input);
 
                 foreach (var token in tokens)
                 {
-                    Console.WriteLine($">> {token.ToString()}");
+                    Console.WriteLine($">> {token}");
                 }
+
+                Console.WriteLine();
+
+                var node = parser.Parse(tokens);
             }
         }
     }

@@ -7,7 +7,7 @@ using ExpressionParser.Common;
 
 namespace ExpressionParser.Interfaces
 {
-    public interface INode : IEvaluable
+    public interface INode
     {
         INode? Left { get; set; }
         INode? Right { get; set; }
