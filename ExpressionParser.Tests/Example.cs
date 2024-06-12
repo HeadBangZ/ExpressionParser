@@ -7,14 +7,14 @@ namespace ExpressionParser.Tests
         [Fact]
         public void Test1()
         {
-            var ep = new Parser();
-            var result = ep.Tokenize(@"10 + 5    - aaa3 / 5 \ 3");
+            var lexer = new Lexer();
+            var parser = new Parser();
 
-            //ep.Parse(@"10 +* 5    -- aaa3 / 5 \ 3");
-            var r1 = ep.Tokenize(@"10 +* 5    - aaa3 / 5 \ 3");
+            var tokens1 = lexer.Tokenize(@"10 + 5    - aaa3 / 5 \ 3");
+            var tokens2 = lexer.Tokenize(@"10 +* 5    - aaa3 / 5 \ 3");
 
-            Assert.True(result.Count() > 0);
-            Assert.True(r1.Count() > 0);
+            Assert.True(tokens1.Count() > 0);
+            Assert.True(tokens2.Count() > 0);
         }
     }
 }

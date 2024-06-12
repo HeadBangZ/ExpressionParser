@@ -10,7 +10,7 @@ namespace ExpressionParser.Common
 {
     public class Parser : IParser
     {
-        private Token _currentToken;
+        private Token? _currentToken;
         private Evaluator _evaluator;
 
         public Parser()
@@ -23,71 +23,6 @@ namespace ExpressionParser.Common
             _currentToken = tokens.Count > 0 ? tokens.Dequeue() : new Token(TokenType.EOF, null);
             var root = ParseExpression(tokens);
             return root;
-        }
-
-        public Queue<Token> Tokenize(string expression)
-        {
-            List<Token> tokens = new List<Token>();
-
-            int i = 0;
-
-            while (i < expression.Length)
-            {
-                char c = expression[i];
-
-                switch (c)
-                {
-                    case ' ':
-                    case '\t':
-                    case '\r':
-                    case '\n':
-                        i++;
-                        break;
-                    case '+':
-                    case '-':
-                    case '*':
-                    case '/':
-                    case '^':
-                        tokens.Add(new Token(TokenType.Operator, c));
-                        i++;
-                        break;
-                    case '(':
-                        tokens.Add(new Token(TokenType.LeftParenthesis, c));
-                        i++;
-                        break;
-                    case ')':
-                        tokens.Add(new Token(TokenType.RightParenthesis, c));
-                        i++;
-                        break;
-                    default:
-                        if (char.IsDigit(c))
-                        {
-                            StringBuilder sb = new StringBuilder();
-                            while (i < expression.Length && char.IsDigit(expression[i]))
-                            {
-                                sb.Append(expression[i]);
-                                i++;
-                            }
-
-                            double number;
-
-                            if (!double.TryParse(sb.ToString(), out number))
-                            {
-                                throw new FormatException($"Invalid number format: {sb}");
-                            }
-
-                            tokens.Add(new Token(TokenType.ValueData, number));
-                        }
-                        else
-                        {
-                            i++;
-                        }
-                        break;
-
-                }
-            }
-
-            return new Queue<Token>(tokens);
         }
 
         private INode ParseExpression(Queue<Token> tokens)
