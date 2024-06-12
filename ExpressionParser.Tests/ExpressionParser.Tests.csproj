@@ -6,12 +6,7 @@
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
-    <BaseOutputPath>C:\Users\zippe\source\repos\Parser</BaseOutputPath>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Include="Example.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.0" />

@@ -5,12 +5,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <BaseOutputPath>C:\Users\zippe\source\repos\Parser</BaseOutputPath>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Include="Program.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ExpressionParser\ExpressionParser.csproj" />
