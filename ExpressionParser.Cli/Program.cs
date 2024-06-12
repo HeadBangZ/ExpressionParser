@@ -14,6 +14,7 @@ internal class Program
         Console.WriteLine("\tAllowed operators: + - * / ^ ( )");
         Console.WriteLine("____________________________________________________________");
 
+        Lexer lexer = new Lexer();
         Parser parser = new Parser();
 
         while (true)
@@ -30,7 +31,7 @@ internal class Program
 
             if (input != null)
             {
-                var tokens = parser.Tokenize(input);
+                var tokens = lexer.Tokenize(input);
 
                 foreach (var token in tokens)
                 {

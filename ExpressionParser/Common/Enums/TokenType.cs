@@ -9,7 +9,7 @@ namespace ExpressionParser.Common.Enums
     public enum TokenType
     {
         Operator,
-        ValueData,
+        Number,
         LeftParenthesis,
         RightParenthesis,
         EOF,

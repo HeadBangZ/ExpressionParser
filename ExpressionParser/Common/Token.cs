@@ -12,7 +12,7 @@ namespace ExpressionParser.Common
         public readonly TokenType _type;
         public readonly object? _value;
 
-        public Token(TokenType type, object value)
+        public Token(TokenType type, object? value)
         {
             _type = type;
 

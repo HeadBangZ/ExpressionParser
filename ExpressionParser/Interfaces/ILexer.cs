@@ -7,8 +7,8 @@ using ExpressionParser.Common;
 
 namespace ExpressionParser.Interfaces
 {
-    internal interface IParser
+    public interface ILexer
     {
-        INode Parse(Queue<Token> tokens);
+        Queue<Token> Tokenize(string expression);
     }
 }

@@ -14,7 +14,7 @@ namespace ExpressionParser.Common
         public INode? Right { get; set; }
         public Token Data { get; set; }
 
-        public Node(Token type, INode left = null, INode right = null)
+        public Node(Token type, INode? left = null, INode? right = null)
         {
             Data = type;
             Left = left;
