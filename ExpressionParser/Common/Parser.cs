@@ -21,7 +21,7 @@ namespace ExpressionParser.Common
 
         public INode Parse(Queue<Token> tokens)
         {
-            var root = ParseExpression(tokens); // left = 5 || + 5
+            var root = ParseExpression(tokens);
             return root;
         }
 
