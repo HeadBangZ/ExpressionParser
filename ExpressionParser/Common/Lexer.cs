@@ -72,6 +72,8 @@ namespace ExpressionParser.Common
                 }
             }
 
+            tokens.Add(new Token(TokenType.EOF, null));
+
             return new Queue<Token>(tokens);
         }
     }
