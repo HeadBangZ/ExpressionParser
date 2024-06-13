@@ -41,7 +41,22 @@ internal class Program
                 Console.WriteLine();
 
                 var node = parser.Parse(tokens);
+
+                PrintTree(node);
             }
         }
     }
+
+    public static void PrintTree(INode node, string indent = "", bool isLeft = true)
+    {
+        if (node == null)
+        {
+            return;
+        }
+
+        Console.WriteLine(indent + (isLeft ? "├── " : "└── ") + node.Data);
+        PrintTree(node.Left, indent + (isLeft ? "│   " : "    "), true);
+        PrintTree(node.Right, indent + (isLeft ? "│   " : "    "), false);
+    }
 }
+
