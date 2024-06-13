@@ -11,6 +11,7 @@ namespace ExpressionParser.Common
     public class Parser : IParser
     {
         private Token? _currentToken;
+        private Token? _nextToken;
         private Evaluator _evaluator;
 
         public Parser()
@@ -20,33 +21,59 @@ namespace ExpressionParser.Common
 
         public INode Parse(Queue<Token> tokens)
         {
-            _currentToken = tokens.Count > 0 ? tokens.Dequeue() : new Token(TokenType.EOF, null);
-            var root = ParseExpression(tokens);
+            var root = ParseExpression(tokens); // left = 5 || + 5
             return root;
         }
 
         private INode ParseExpression(Queue<Token> tokens)
         {
-            var left = ParseTerm(tokens);
+            var left = ParseLeaf(tokens);
 
-            return null;
+            NextToken(tokens);
+
+            if (_nextToken._type == TokenType.Operator)
+            {
+                var operatorToken = _nextToken;
+                Consume(tokens);
+                NextToken(tokens);
+                var right = ParseExpression(tokens);
+
+                return MakeBinary(operatorToken, left, right);
+            }
+            else
+            {
+                return left;
+            }
         }
 
-        private INode ParseTerm(Queue<Token> tokens)
+        private INode ParseLeaf(Queue<Token> tokens)
         {
-            var left = ParseFactor(tokens);
-
-            return null;
+            Consume(tokens);
+            NextToken(tokens);
+            return new Node(_currentToken);
         }
 
-        private INode ParseFactor(Queue<Token> tokens)
+        private INode MakeBinary(Token token, INode left, INode right)
         {
-            return null;
+            return new Node(token, left, right);
         }
 
-        private void Match()
+        private void Consume(Queue<Token> tokens)
         {
+            if (tokens.Count > 0)
+            {
+                _currentToken = tokens.Dequeue();
+            }
+        }
 
+        private void NextToken(Queue<Token> tokens)
+        {
+            if (_currentToken._type == TokenType.EOF)
+            {
+                return;
+            }
+
+            _nextToken = tokens.Peek();
         }
     }
 }
