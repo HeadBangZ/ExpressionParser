@@ -11,7 +11,7 @@ internal class Program
         Console.WriteLine("Information\n");
         Console.WriteLine("\tTo exit write: 'exit'");
         Console.WriteLine();
-        Console.WriteLine("\tAllowed operators: + - * / ^ ( )");
+        Console.WriteLine("\tAllowed operators: + - * / ^ ! ( )");
         Console.WriteLine("____________________________________________________________");
 
         Lexer lexer = new Lexer();
