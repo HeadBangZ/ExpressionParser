@@ -37,5 +37,5 @@ jobs:
       working-directory: ${{ github.workspace }}
 
     - name: Build solution
-      run: dotnet build $env:Solution_Name
+      run: dotnet build $Solution_Name
       working-directory: ${{ github.workspace }}
