@@ -35,7 +35,7 @@ jobs:
       run: dotnet test
 
     - name: Restore the application
-      run: dotnet restore $env:Solution_Name
+      run: dotnet restore $Solution_Name
       working-directory: ${{ github.workspace }}
 
     - name: Build solution
