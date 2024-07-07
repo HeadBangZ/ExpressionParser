@@ -29,11 +29,23 @@ namespace ExpressionParser.Common
                         i++;
                         break;
                     case '+':
+                        tokens.Add(new Token(TokenType.Add, c));
+                        i++;
+                        break;
                     case '-':
+                        tokens.Add(new Token(TokenType.Minus, c));
+                        i++;
+                        break;
                     case '*':
+                        tokens.Add(new Token(TokenType.Multiply, c));
+                        i++;
+                        break;
                     case '/':
+                        tokens.Add(new Token(TokenType.Divide, c));
+                        i++;
+                        break;
                     case '^':
-                        tokens.Add(new Token(TokenType.Operator, c));
+                        tokens.Add(new Token(TokenType.Power, c));
                         i++;
                         break;
                     case '(':

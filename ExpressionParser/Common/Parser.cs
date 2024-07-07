@@ -31,7 +31,7 @@ namespace ExpressionParser.Common
 
             NextToken(tokens);
 
-            if (_nextToken._type == TokenType.Operator)
+            if (_nextToken != null && _nextToken._type == TokenType.Add || _nextToken._type == TokenType.Minus || _nextToken._type == TokenType.Divide || _nextToken._type == TokenType.Multiply || _nextToken._type == TokenType.Power)
             {
                 var operatorToken = _nextToken;
                 Consume(tokens);

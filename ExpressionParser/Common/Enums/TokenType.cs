@@ -8,7 +8,11 @@ namespace ExpressionParser.Common.Enums
 {
     public enum TokenType
     {
-        Operator,
+        Add,
+        Minus,
+        Divide,
+        Multiply,
+        Power,
         Number,
         LeftParenthesis,
         RightParenthesis,
