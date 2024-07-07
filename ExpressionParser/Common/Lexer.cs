@@ -73,7 +73,7 @@ namespace ExpressionParser.Common
                                 throw new FormatException($"Invalid number format: {sb}");
                             }
 
-                            tokens.Add(new Token(TokenType.Number, number));
+                            tokens.Add(new Token(TokenType.Numeric, number));
                         }
                         else
                         {

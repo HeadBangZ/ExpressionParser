@@ -13,7 +13,7 @@ namespace ExpressionParser.Common.Enums
         Divide,
         Multiply,
         Power,
-        Number,
+        Numeric,
         LeftParenthesis,
         RightParenthesis,
         EOF,

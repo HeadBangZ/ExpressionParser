@@ -12,6 +12,7 @@ namespace ExpressionParser.Common
     {
         private Token? _currentToken;
         private Token? _nextToken;
+        private INode? _expression;
         private Evaluator _evaluator;
 
         public Parser()
@@ -29,28 +30,57 @@ namespace ExpressionParser.Common
         {
             var left = ParseLeaf(tokens);
 
-            NextToken(tokens);
-
-            if (_nextToken != null && _nextToken._type == TokenType.Add || _nextToken._type == TokenType.Minus || _nextToken._type == TokenType.Divide || _nextToken._type == TokenType.Multiply || _nextToken._type == TokenType.Power)
+            if (_nextToken != null && (_nextToken._type == TokenType.Add || _nextToken._type == TokenType.Minus))
             {
                 var operatorToken = _nextToken;
                 Consume(tokens);
                 NextToken(tokens);
                 var right = ParseExpression(tokens);
 
-                return MakeBinary(operatorToken, left, right);
+                left = MakeBinary(operatorToken, left, right);
             }
-            else
-            {
-                return left;
-            }
+
+            return left;
         }
 
         private INode ParseLeaf(Queue<Token> tokens)
         {
+            var left = ParseFactor(tokens);
+
+            if (_nextToken != null && (_nextToken._type == TokenType.Divide || _nextToken._type == TokenType.Multiply))
+            {
+                var operatorToken = _nextToken;
+                Consume(tokens);
+                NextToken(tokens);
+                var right = ParseExpression(tokens);
+
+                left = MakeBinary(operatorToken, left, right);
+            }
+
+            return left;
+        }
+
+        // TODO: Fix issues with ParseFactor (Including how I consume and peek at the next token)
+        private INode ParseFactor(Queue<Token> tokens)
+        {
             Consume(tokens);
             NextToken(tokens);
-            return new Node(_currentToken);
+            var literal = new Node(_currentToken);
+            return literal;
+            //if (_currentToken != null && _currentToken._type == TokenType.Numeric)
+            //{
+            //    Consume(tokens);
+            //    NextToken(tokens);
+            //    var literal = new Node(_currentToken);
+            //    return literal;
+            //}
+
+            //while (_currentToken != null && _currentToken._type != TokenType.RightParenthesis)
+            //{
+            //    _expression = ParseExpression(tokens);
+            //}
+
+            //return _expression;
         }
 
         private INode MakeBinary(Token token, INode left, INode right)
@@ -68,7 +98,7 @@ namespace ExpressionParser.Common
 
         private void NextToken(Queue<Token> tokens)
         {
-            if (_currentToken._type == TokenType.EOF)
+            if (_currentToken == null || _currentToken._type == TokenType.EOF)
             {
                 return;
             }
