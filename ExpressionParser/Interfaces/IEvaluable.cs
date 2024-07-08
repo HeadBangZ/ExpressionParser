@@ -10,7 +10,5 @@ namespace ExpressionParser.Interfaces
     public interface IEvaluable
     {
         double Evaluate(double left, double right, string op);
-
-        int GetPrecedence(Token token);
     }
 }
