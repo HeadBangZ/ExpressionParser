@@ -11,46 +11,88 @@ namespace ExpressionParser.Common
     public class Parser : IParser
     {
         private Token? _currentToken;
-        private Token? _nextToken;
-        private Evaluator _evaluator;
 
         public Parser()
         {
-            _evaluator = Evaluator.Instance;
         }
 
         public INode Parse(Queue<Token> tokens)
         {
-            var root = ParseExpression(tokens);
-            return root;
+            Consume(tokens);
+            return ParseExpression(tokens);
         }
 
         private INode ParseExpression(Queue<Token> tokens)
         {
-            var left = ParseLeaf(tokens);
+            var left = ParseMultiplyDivide(tokens);
 
-            NextToken(tokens);
-
-            if (_nextToken._type == TokenType.Operator)
+            while (_currentToken != null && (_currentToken._type == TokenType.Add || _currentToken._type == TokenType.Minus))
             {
-                var operatorToken = _nextToken;
+                var operatorToken = _currentToken;
                 Consume(tokens);
-                NextToken(tokens);
-                var right = ParseExpression(tokens);
+                var right = ParseMultiplyDivide(tokens);
+                left = MakeBinary(operatorToken, left, right);
+            }
 
-                return MakeBinary(operatorToken, left, right);
-            }
-            else
-            {
-                return left;
-            }
+            return left;
         }
 
-        private INode ParseLeaf(Queue<Token> tokens)
+        private INode ParseMultiplyDivide(Queue<Token> tokens)
         {
-            Consume(tokens);
-            NextToken(tokens);
-            return new Node(_currentToken);
+            var left = ParsePower(tokens);
+
+            while (_currentToken != null && (_currentToken._type == TokenType.Multiply || _currentToken._type == TokenType.Divide))
+            {
+                var operatorToken = _currentToken;
+                Consume(tokens);
+                var right = ParsePower(tokens);
+                left = MakeBinary(operatorToken, left, right);
+            }
+
+            return left;
+        }
+
+        private INode ParsePower(Queue<Token> tokens)
+        {
+            var left = ParseFactor(tokens);
+
+            while (_currentToken != null && (_currentToken._type == TokenType.Power))
+            {
+                var operatorToken = _currentToken;
+                Consume(tokens);
+                var right = ParseFactor(tokens);
+                left = MakeBinary(operatorToken, left, right);
+            }
+
+            return left;
+        }
+
+        private INode ParseFactor(Queue<Token> tokens)
+        {
+            if (_currentToken != null && _currentToken._type == TokenType.Numeric)
+            {
+                var literal = new Node(_currentToken);
+                Consume(tokens);
+                return literal;
+            }
+
+            if (_currentToken != null && _currentToken._type == TokenType.LeftParenthesis)
+            {
+                Consume(tokens);
+                var expression = ParseExpression(tokens);
+
+                if (_currentToken == null || _currentToken._type != TokenType.RightParenthesis)
+                {
+                    throw new InvalidOperationException("Missing closing parenthesis");
+                }
+
+                Consume(tokens);
+                return expression;
+            }
+
+            if (_currentToken._type == TokenType.EOF) return new Node(_currentToken);
+
+            throw new InvalidOperationException("Missing EOF token");
         }
 
         private INode MakeBinary(Token token, INode left, INode right)
@@ -64,16 +106,10 @@ namespace ExpressionParser.Common
             {
                 _currentToken = tokens.Dequeue();
             }
-        }
-
-        private void NextToken(Queue<Token> tokens)
-        {
-            if (_currentToken._type == TokenType.EOF)
+            else
             {
-                return;
+                _currentToken = null;
             }
-
-            _nextToken = tokens.Peek();
         }
     }
 }

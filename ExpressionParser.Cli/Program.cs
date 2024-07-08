@@ -16,6 +16,7 @@ internal class Program
 
         Lexer lexer = new Lexer();
         Parser parser = new Parser();
+        Evaluator evaluator = Evaluator.Instance;
 
         while (true)
         {

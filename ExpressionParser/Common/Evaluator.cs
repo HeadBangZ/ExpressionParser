@@ -36,18 +36,5 @@ namespace ExpressionParser.Common
                 _ => throw new InvalidOperationException("Unsupported operator.")
             };
         }
-
-        public int GetPrecedence(Token token)
-        {
-            return token._value switch
-            {
-                "^" => 3,
-                "*" => 2,
-                "/" => 2,
-                "+" => 1,
-                "-" => 1,
-                _ => 0
-            };
-        }
     }
 }

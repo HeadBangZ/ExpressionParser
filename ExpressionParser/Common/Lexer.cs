@@ -12,7 +12,7 @@ namespace ExpressionParser.Common
     {
         public Queue<Token> Tokenize(string expression)
         {
-            List<Token> tokens = new List<Token>();
+            Queue<Token> tokens = new Queue<Token>();
 
             int i = 0;
 
@@ -29,19 +29,31 @@ namespace ExpressionParser.Common
                         i++;
                         break;
                     case '+':
+                        tokens.Enqueue(new Token(TokenType.Add, c));
+                        i++;
+                        break;
                     case '-':
+                        tokens.Enqueue(new Token(TokenType.Minus, c));
+                        i++;
+                        break;
                     case '*':
+                        tokens.Enqueue(new Token(TokenType.Multiply, c));
+                        i++;
+                        break;
                     case '/':
+                        tokens.Enqueue(new Token(TokenType.Divide, c));
+                        i++;
+                        break;
                     case '^':
-                        tokens.Add(new Token(TokenType.Operator, c));
+                        tokens.Enqueue(new Token(TokenType.Power, c));
                         i++;
                         break;
                     case '(':
-                        tokens.Add(new Token(TokenType.LeftParenthesis, c));
+                        tokens.Enqueue(new Token(TokenType.LeftParenthesis, c));
                         i++;
                         break;
                     case ')':
-                        tokens.Add(new Token(TokenType.RightParenthesis, c));
+                        tokens.Enqueue(new Token(TokenType.RightParenthesis, c));
                         i++;
                         break;
                     default:
@@ -61,7 +73,7 @@ namespace ExpressionParser.Common
                                 throw new FormatException($"Invalid number format: {sb}");
                             }
 
-                            tokens.Add(new Token(TokenType.Number, number));
+                            tokens.Enqueue(new Token(TokenType.Numeric, number));
                         }
                         else
                         {
@@ -72,9 +84,9 @@ namespace ExpressionParser.Common
                 }
             }
 
-            tokens.Add(new Token(TokenType.EOF, null));
+            tokens.Enqueue(new Token(TokenType.EOF, null));
 
-            return new Queue<Token>(tokens);
+            return tokens;
         }
     }
 }
