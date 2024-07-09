@@ -11,7 +11,6 @@ namespace ExpressionParser.Common
     public sealed class Evaluator : IEvaluable
     {
         private static readonly Evaluator _instance = new Evaluator();
-        private List<INode> _nodes = new List<INode>();
 
         static Evaluator() { }
 
