@@ -9,6 +9,6 @@ namespace ExpressionParser.Interfaces
 {
     public interface IEvaluable
     {
-        double Evaluate(double left, double right, string op);
+        double Evaluate(INode node);
     }
 }

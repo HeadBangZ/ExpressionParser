@@ -27,22 +27,19 @@ internal class Program
             {
                 break;
             }
-
-            Console.WriteLine($">> input - {input}");
+            Console.WriteLine();
+            Console.WriteLine($">> Input: {input}");
 
             if (input != null)
             {
                 var tokens = lexer.Tokenize(input);
-
-                foreach (var token in tokens)
-                {
-                    Console.WriteLine($">> {token}");
-                }
+                var node = parser.Parse(tokens);
+                var result = evaluator.Evaluate(node);
 
                 Console.WriteLine();
+                Console.WriteLine($">> Reult: {result}");
 
-                var node = parser.Parse(tokens);
-
+                Console.WriteLine();
                 PrintTree(node);
             }
         }

@@ -11,6 +11,7 @@ namespace ExpressionParser.Common
     public sealed class Evaluator : IEvaluable
     {
         private static readonly Evaluator _instance = new Evaluator();
+        private List<INode> _nodes = new List<INode>();
 
         static Evaluator() { }
 
@@ -24,16 +25,39 @@ namespace ExpressionParser.Common
             }
         }
 
-        public double Evaluate(double left, double right, string op)
+        public double Evaluate(INode node)
         {
-            return op switch
+            double a, b;
+
+            switch (node.Data._type)
             {
-                "+" => left + right,
-                "-" => left - right,
-                "*" => left * right,
-                "/" => left / right,
-                "^" => Math.Pow(left, right),
-                _ => throw new InvalidOperationException("Unsupported operator.")
+                case TokenType.Numeric:
+                    return Convert.ToDouble(node.Data._value);
+                case TokenType.Add:
+#pragma warning disable CS8604 // Possible null reference argument.
+                    a = Evaluate(node.Left);
+                    b = Evaluate(node.Right);
+                    return a + b;
+                case TokenType.Minus:
+                    a = Evaluate(node.Left);
+                    b = Evaluate(node.Right);
+                    return a - b;
+                case TokenType.Multiply:
+                    a = Evaluate(node.Left);
+                    b = Evaluate(node.Right);
+                    return a * b;
+                case TokenType.Divide:
+                    a = Evaluate(node.Left);
+                    b = Evaluate(node.Right);
+                    return a / b;
+                case TokenType.Power:
+                    a = Evaluate(node.Left);
+                    b = Evaluate(node.Right);
+#pragma warning restore CS8604 // Possible null reference argument.
+
+                    return Math.Pow(a, b);
+                default:
+                    throw new NotImplementedException($"Node of type {node.Data._type} is not implemented");
             };
         }
     }
