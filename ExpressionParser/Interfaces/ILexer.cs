@@ -7,7 +7,7 @@ using ExpressionParser.Common;
 
 namespace ExpressionParser.Interfaces
 {
-    public interface ILexer
+    internal interface ILexer
     {
         Queue<Token> Tokenize(string expression);
     }

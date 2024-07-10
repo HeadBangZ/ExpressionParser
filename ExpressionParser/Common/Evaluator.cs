@@ -48,6 +48,11 @@ namespace ExpressionParser.Common
                 case TokenType.Divide:
                     a = Evaluate(node.Left);
                     b = Evaluate(node.Right);
+
+                    if (b == 0)
+                    {
+                        throw new DivideByZeroException("Can not divide by zero");
+                    }
                     return a / b;
                 case TokenType.Power:
                     a = Evaluate(node.Left);

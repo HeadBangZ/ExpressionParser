@@ -81,7 +81,7 @@ namespace ExpressionParser.Common
                 Consume(tokens);
                 var expression = ParseExpression(tokens);
 
-                if (_currentToken == null || _currentToken._type != TokenType.RightParenthesis)
+                if (_currentToken._type != TokenType.RightParenthesis)
                 {
                     throw new InvalidOperationException("Missing closing parenthesis");
                 }
@@ -90,7 +90,7 @@ namespace ExpressionParser.Common
                 return expression;
             }
 
-            if (_currentToken._type == TokenType.EOF) return new Node(_currentToken);
+            if (_currentToken != null && _currentToken._type == TokenType.EOF) return new Node(_currentToken);
 
             throw new InvalidOperationException("Missing EOF token");
         }
