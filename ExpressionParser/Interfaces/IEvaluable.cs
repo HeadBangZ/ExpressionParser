@@ -7,7 +7,7 @@ using ExpressionParser.Common;
 
 namespace ExpressionParser.Interfaces
 {
-    public interface IEvaluable
+    internal interface IEvaluable
     {
         double Evaluate(INode node);
     }
