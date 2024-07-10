@@ -22,6 +22,16 @@ namespace ExpressionParser.Tests
         }
 
         [Fact]
+        public void Lexer_Tokenization_RemoveForbiddenChars()
+        {
+            var expression = "5 + 3 * ( 10 - 4 ab b ) c";
+            var queue = _lexer.Tokenize(expression);
+            Assert.NotNull(queue);
+            Assert.NotEqual(expression.Split(' ').Length, queue.Count);
+            Assert.Equal(10, queue.Count);
+        }
+
+        [Fact]
         public void Lexer_Tokenization_IncorrectLength()
         {
             var expression = "5 + 3 * ( 10 - 4 )";
